@@ -4,6 +4,7 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -14,7 +15,7 @@ public class CasoInicialTest {
     private static List<Carta> atacantes, defensores;
 
     @BeforeAll
-     static void setUp() {
+    static void setUp() {
         atacantes = new LinkedList<>();
         defensores = new LinkedList<>();
     }
@@ -39,9 +40,31 @@ public class CasoInicialTest {
         Carta cuatro = new Carta("cuatro", 8, 4, Tablero.IZQUIERDA);
         atacantes.add(uno);
         defensores.add(cuatro);
-        String resultadoEsperado = "Carta 1 (3/2/Izquierda) vs Carta 4 (8/4/Izquierda) -> " +
-                "Carta 4 pierde 3 puntos de Vida (1 punto(s) de Vida restante(s)).";
+        String resultadoEsperado = "Carta uno (3/2/Izquierda) vs Carta cuatro (8/4/Izquierda) -> " +
+                "Carta cuatro pierde 3 puntos de Vida (1 punto(s) de Vida restante(s)).";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
+
+    @Test
+    public void casoTresTest() {
+        Carta dos = new Carta("dos", 3, 2, Tablero.CENTRO);
+        Carta cinco = new Carta("cinco", 8, 1, Tablero.CENTRO);
+        atacantes.add(dos);
+        defensores.add(cinco);
+        String resultadoEsperado = "Carta dos (3/2/Centro) vs Carta cinco (8/1/Centro) -> " +
+                "Carta cinco pierde 3 puntos de Vida. Carta cinco destruido/a.";
+        assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
+    }
+/*
+       public static String combatir(Carta Atacante, Carta Defensor) {
+        String resultado = Atacante.toString() + " vs " + Defensor.toString() + " -> " +
+                "Carta" + Defensor.nombreString() + " pierde " + Atacante.getAtaque() + " puntos de Vida";
+        if (Defensor.getVida() <= Atacante.getAtaque()) {
+            resultado += ". Carta" + Defensor.nombreString() + " destruido/a.";
+        } else {
+            resultado += " (" + (Defensor.getVida() - Atacante.getAtaque()) + " punto(s) de Vida restante(s)).";
+        }
+        return (resultado);
+    }*/
 
 }
