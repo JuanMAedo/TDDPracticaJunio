@@ -5,7 +5,7 @@ public class Carta {
     private final String nombre;
     private final int ataque;
     private final int defensa;
-    private final Tablero tablero;
+    private  Tablero tablero;
     private final Efecto efecto;
 
     public Carta(String nombre, int ataque, int defensa, Tablero tablero) {
@@ -38,9 +38,7 @@ public class Carta {
     public Tablero getTablero() {
         return tablero;
     }
-    public Efecto getEfecto() {
-        return efecto;
-    }
+
     public boolean esToqueMortal() {
         return this.efecto == Efecto.TOQUEMORTAL;
     }
@@ -52,5 +50,9 @@ public class Carta {
 
     public boolean esAtaqueBifurcado() {
         return this.efecto == Efecto.ATAQUEBIFURCADO;
+    }
+
+    public void setTablero(Tablero tablero) {
+        this.tablero = tablero;
     }
 }

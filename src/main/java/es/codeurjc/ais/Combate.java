@@ -12,26 +12,19 @@ public class Combate {
             throw new IllegalPositionException("No pueden existir múltiples cartas en la misma posición del tablero");
         }
         StringBuilder resultado = new StringBuilder();
+        int posicionDef;
         for (Carta atacante : atacantes) {
-            int posicionDef;
-            if (atacante.esAtaqueBifurcado() && (atacante.getTablero().equals(Tablero.IZQUIERDA)
-                    || atacante.getTablero().equals(Tablero.DERECHA))) {
-                posicionDef = encontrarPosicion(Tablero.CENTRO, defensores);
-            } else {
-                posicionDef = encontrarPosicion(atacante.getTablero(), defensores);
-            }
+            posicionDef = posicionAtaque(atacante, defensores);
             if (posicionDef != -1) { // Hay una carta Defensora en la posición Atacante
                 Carta defensor = defensores.get(posicionDef);
                 resultado.append(combateCartaDefensora(atacante, defensor));
-            } else { // No hay Carta Defensora. Daño sobre el jugador
+            }
+            if ((atacante.esAtaqueBifurcado() && atacante.getTablero().equals(Tablero.CENTRO))
+                    || posicionDef == -1) { // No hay Carta Defensora. Daño sobre el jugador
                 int posicionDef2 = encontrarPosicion(atacante.getTablero(), defensores);
-                String rival = "";
-                if (posicionDef2 != -1) {
-                    rival = defensores.get(posicionDef2).toString();
-
-                } else {
-                    rival = "Nadie (Vacío)";
-                }
+                String rival;
+                rival = (posicionDef2 != -1) ? defensores.get(posicionDef2).toString() :
+                        "Nadie (Vacío)";
                 resultado.append(combateSinCartaDefensora(atacante, rival));
             }
         }
@@ -61,8 +54,18 @@ public class Combate {
     }
 
     private static String combateSinCartaDefensora(Carta atacante, String rival) {
-        return  atacante + " vs " + rival +
+        return atacante + " vs " + rival +
                 " -> Daño directo de " + atacante.getAtaque() + " punto(s).";
+    }
+
+    private static int posicionAtaque(Carta atacante, List<Carta> defensores) {
+        if (!atacante.esAtaqueBifurcado()) {
+            return encontrarPosicion(atacante.getTablero(), defensores);
+        } else if (atacante.getTablero().equals(Tablero.CENTRO)) {
+            return encontrarPosicion(Tablero.IZQUIERDA, defensores);
+        } else {
+            return encontrarPosicion(Tablero.CENTRO, defensores);
+        }
     }
 
     private static int vidaRestante(int defensa, int ataque) {

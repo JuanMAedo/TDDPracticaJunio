@@ -115,9 +115,7 @@ public class CasoInicialTest {
         atacantes.add(dos);
         defensores.add(tres);
 
-        Throwable excepcion = assertThrows(IllegalPositionException.class, () -> {
-            String resultado= Combate.combatir(atacantes, defensores);
-        });
+        Throwable excepcion = assertThrows(IllegalPositionException.class, () -> Combate.combatir(atacantes, defensores));
         assertEquals("No pueden existir múltiples cartas en la misma posición del tablero", excepcion.getMessage());
     }
 }
