@@ -15,17 +15,20 @@ public class Combate {
         int posicionDef;
         for (Carta atacante : atacantes) {
             posicionDef = posicionAtaque(atacante, defensores);
-            if (posicionDef != -1) { // Hay una carta Defensora en la posición Atacante
+            if (posicionDef > -1) { // Hay una carta Defensora en la posición Atacante
                 Carta defensor = defensores.get(posicionDef);
                 resultado.append(combateCartaDefensora(atacante, defensor));
             }
             if ((atacante.esAtaqueBifurcado() && atacante.getTablero().equals(Tablero.CENTRO))
-                    || posicionDef == -1) { // No hay Carta Defensora. Daño sobre el jugador
+                    || posicionDef == -1 || posicionDef == -2) { // No hay Carta Defensora. Daño sobre el jugador
                 int posicionDef2 = encontrarPosicion(atacante.getTablero(), defensores);
                 String rival;
                 rival = (posicionDef2 != -1) ? defensores.get(posicionDef2).toString() :
                         "Nadie (Vacío)";
                 resultado.append(combateSinCartaDefensora(atacante, rival));
+                if (posicionDef == -2){
+                    resultado.append(" ").append(combateSinCartaDefensora(atacante, rival));
+                }
             }
         }
         return resultado.toString();
@@ -64,8 +67,10 @@ public class Combate {
         } else if (atacante.getTablero().equals(Tablero.CENTRO)) {
             if (encontrarPosicion(Tablero.IZQUIERDA, defensores) != -1) {
                 return encontrarPosicion(Tablero.IZQUIERDA, defensores);
-            }else{
+            }else if (encontrarPosicion(Tablero.DERECHA, defensores) != -1){
                 return encontrarPosicion(Tablero.DERECHA, defensores);
+            }else {
+                return -2;
             }
         } else {
             return encontrarPosicion(Tablero.CENTRO, defensores);

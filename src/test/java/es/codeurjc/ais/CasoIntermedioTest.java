@@ -120,4 +120,14 @@ public class CasoIntermedioTest {
                 "vs Nadie (Vacío) -> Daño directo de 2 punto(s).";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
+    @Test
+    public void casoDieciseisTest() throws IllegalPositionException{
+        Carta dos = new Carta("dos", 2, 1, Tablero.CENTRO, Efecto.ATAQUEBIFURCADO);
+        atacantes.add(dos);
+        String resultadoEsperado = "Carta dos (2/1/Centro/Efecto: Ataque bifurcado) vs Nadie (Vacío) " +
+                "-> Daño directo de 2 punto(s). "+
+                "Carta dos (2/1/Centro/Efecto: Ataque bifurcado) vs Nadie (Vacío) " +
+                "-> Daño directo de 2 punto(s).";
+        assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
+    }
 }
