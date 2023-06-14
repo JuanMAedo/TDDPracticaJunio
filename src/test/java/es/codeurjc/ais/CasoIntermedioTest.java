@@ -130,4 +130,20 @@ public class CasoIntermedioTest {
                 "-> Daño directo de 2 punto(s).";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
+
+    @Test
+    public void casoDiecisieteTest() throws IllegalPositionException{
+        Carta dos = new Carta("dos", 2, 1, Tablero.CENTRO, Efecto.ATAQUEBIFURCADO);
+        Carta cuatro = new Carta("cuatro", 4, 3, Tablero.IZQUIERDA);
+        Carta seis = new Carta("seis", 5, 1, Tablero.DERECHA);
+        atacantes.add(dos);
+        defensores.add(cuatro);
+        defensores.add(seis);
+        String resultadoEsperado = "Carta dos (2/1/Centro/Efecto: Ataque bifurcado) vs " +
+                "Carta cuatro (4/3/Izquierda/Efecto: N/A) " +
+                "-> Carta cuatro pierde 2 punto(s) de Vida (1 punto(s) de Vida restante(s)). " +
+                "Carta dos (2/1/Centro/Efecto: Ataque bifurcado) vs Carta seis (5/1/Derecha/Efecto: N/A) " +
+                "-> Carta seis pierde 2 punto(s) de Vida. Carta seis destruido/a. ";
+        assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
+    }
 }

@@ -19,14 +19,20 @@ public class Combate {
                 Carta defensor = defensores.get(posicionDef);
                 resultado.append(combateCartaDefensora(atacante, defensor));
             }
-            if ((atacante.esAtaqueBifurcado() && atacante.getTablero().equals(Tablero.CENTRO))
+            if( posicionDef == -3) {
+                Carta defensor = defensores.get(encontrarPosicion(Tablero.IZQUIERDA,defensores));
+                resultado.append(combateCartaDefensora(atacante, defensor));
+                defensor = defensores.get(encontrarPosicion(Tablero.DERECHA,defensores));
+                resultado.append(combateCartaDefensora(atacante, defensor));
+            }
+            if ((atacante.esAtaqueBifurcado() && (atacante.getTablero().equals(Tablero.CENTRO) && posicionDef != -3))
                     || posicionDef == -1 || posicionDef == -2) { // No hay Carta Defensora. Daño sobre el jugador
                 int posicionDef2 = encontrarPosicion(atacante.getTablero(), defensores);
                 String rival;
                 rival = (posicionDef2 != -1) ? defensores.get(posicionDef2).toString() :
                         "Nadie (Vacío)";
                 resultado.append(combateSinCartaDefensora(atacante, rival));
-                if (posicionDef == -2){
+                if (posicionDef == -2) {
                     resultado.append(" ").append(combateSinCartaDefensora(atacante, rival));
                 }
             }
@@ -56,20 +62,22 @@ public class Combate {
         return resultado.toString();
     }
 
-    private static String combateSinCartaDefensora(Carta atacante, String rival) {
-        return atacante + " vs " + rival +
-                " -> Daño directo de " + atacante.getAtaque() + " punto(s).";
-    }
-
     private static int posicionAtaque(Carta atacante, List<Carta> defensores) {
+        int resultado;
         if (!atacante.esAtaqueBifurcado()) {
             return encontrarPosicion(atacante.getTablero(), defensores);
         } else if (atacante.getTablero().equals(Tablero.CENTRO)) {
-            if (encontrarPosicion(Tablero.IZQUIERDA, defensores) != -1) {
-                return encontrarPosicion(Tablero.IZQUIERDA, defensores);
-            }else if (encontrarPosicion(Tablero.DERECHA, defensores) != -1){
-                return encontrarPosicion(Tablero.DERECHA, defensores);
-            }else {
+            resultado = encontrarPosicion(Tablero.IZQUIERDA, defensores);
+            if (resultado != -1 && (encontrarPosicion(Tablero.DERECHA, defensores) != -1)) {
+                return -3;
+            }
+            if (resultado != -1) {
+                return resultado;
+            }
+            resultado = encontrarPosicion(Tablero.DERECHA, defensores);
+            if (resultado != -1) {
+                return resultado;
+            } else {
                 return -2;
             }
         } else {
@@ -77,8 +85,11 @@ public class Combate {
         }
     }
 
-    private static int vidaRestante(int defensa, int ataque) {
+    private static String combateSinCartaDefensora(Carta atacante, String rival) {
+        return atacante + " vs " + rival + " -> Daño directo de " + atacante.getAtaque() + " punto(s).";
+    }
 
+    private static int vidaRestante(int defensa, int ataque) {
         return defensa - ataque;
     }
 
