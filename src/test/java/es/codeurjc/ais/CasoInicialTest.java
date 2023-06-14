@@ -4,7 +4,6 @@ import org.junit.jupiter.api.AfterEach;
 import org.junit.jupiter.api.BeforeAll;
 import org.junit.jupiter.api.Test;
 
-import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -41,7 +40,7 @@ public class CasoInicialTest {
         atacantes.add(uno);
         defensores.add(cuatro);
         String resultadoEsperado = "Carta uno (3/2/Izquierda) vs Carta cuatro (8/4/Izquierda) -> " +
-                "Carta cuatro pierde 3 puntos de Vida (1 punto(s) de Vida restante(s)).";
+                "Carta cuatro pierde 3 punto(s) de Vida (1 punto(s) de Vida restante(s)). ";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
 
@@ -52,18 +51,32 @@ public class CasoInicialTest {
         atacantes.add(dos);
         defensores.add(cinco);
         String resultadoEsperado = "Carta dos (3/2/Centro) vs Carta cinco (8/1/Centro) -> " +
-                "Carta cinco pierde 3 puntos de Vida. Carta cinco destruido/a.";
+                "Carta cinco pierde 3 punto(s) de Vida. Carta cinco destruido/a. ";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
 
     @Test
     public void casoCuatroTest() {
         Carta tres = new Carta("tres", 6, 3, Tablero.DERECHA);
-        Carta cinco = new Carta("cinco", 3, 1, Tablero.CENTRO);
+        Carta cinco = new Carta("cinco", 3, 1, Tablero.IZQUIERDA);
         atacantes.add(tres);
         defensores.add(cinco);
         String resultadoEsperado = "Carta tres (6/3/Derecha) vs Nadie (Vacío) -> " +
                 "Daño directo de 6 punto(s).";
+        assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
+    }
+
+    @Test
+    public void casoCincoTest() {
+        Carta dos = new Carta("dos", 3, 1, Tablero.CENTRO);
+        Carta seis = new Carta("seis", 6, 3, Tablero.DERECHA);
+        Carta cinco = new Carta("cinco", 0, 3, Tablero.CENTRO);
+        atacantes.add(dos);
+        atacantes.add(seis);
+        defensores.add(cinco);
+        String resultadoEsperado = "Carta dos (3/1/Centro) vs Carta cinco (0/3/Centro) -> " +
+                "Carta cinco pierde 3 punto(s) de Vida. Carta cinco destruido/a. " +
+                "Carta seis (6/3/Derecha) vs Nadie (Vacío) -> Daño directo de 6 punto(s).";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
 
