@@ -35,6 +35,7 @@ public class CasoIntermedioTest {
                 "(2/7/Izquierda/Efecto: N/A) -> Carta cuatro destruido/a. ";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
+
     @Test
     public void casoNueveTest() throws IllegalPositionException{
         Carta dos = new Carta("dos", 4, 2, Tablero.CENTRO);
@@ -46,4 +47,18 @@ public class CasoIntermedioTest {
                 "Vida (1 punto(s) de Vida restante(s)). Carta dos destruido/a. ";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
+
+    @Test
+    public void casoDiezTest() throws IllegalPositionException{
+        Carta tres = new Carta("tres", 4, 2, Tablero.DERECHA);
+        Carta seis = new Carta("seis", 8, 1, Tablero.DERECHA, Efecto.TOQUEMORTAL);
+        atacantes.add(tres);
+        defensores.add(seis);
+        String resultadoEsperado = "Carta tres (4/2/Derecha/Efecto: N/A) vs Carta seis " +
+                "(8/1/Derecha/Efecto: Toque mortal) -> Carta seis pierde 4 punto(s) de " +
+                "Vida. Carta seis destruido/a. Carta tres destruido/a. ";
+        assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
+    }
+
+
 }
