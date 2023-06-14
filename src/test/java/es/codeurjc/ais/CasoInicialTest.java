@@ -30,7 +30,7 @@ public class CasoInicialTest {
     public void casoUnoTest() throws IllegalPositionException{
         Carta uno = new Carta("uno", 5, 1, Tablero.IZQUIERDA);
         atacantes.add(uno);
-        String resultadoEsperado = "Carta uno (5/1/Izquierda) vs Nadie (Vacío) -> Daño directo de 5 punto(s).";
+        String resultadoEsperado = "Carta uno (5/1/Izquierda/Efecto: N/A) vs Nadie (Vacío) -> Daño directo de 5 punto(s).";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
 
@@ -40,8 +40,8 @@ public class CasoInicialTest {
         Carta cuatro = new Carta("cuatro", 8, 4, Tablero.IZQUIERDA);
         atacantes.add(uno);
         defensores.add(cuatro);
-        String resultadoEsperado = "Carta uno (3/2/Izquierda) vs Carta cuatro (8/4/Izquierda) -> " +
-                "Carta cuatro pierde 3 punto(s) de Vida (1 punto(s) de Vida restante(s)). ";
+        String resultadoEsperado = "Carta uno (3/2/Izquierda/Efecto: N/A) vs Carta cuatro (8/4/Izquierda/Efecto: N/A)" +
+                " -> Carta cuatro pierde 3 punto(s) de Vida (1 punto(s) de Vida restante(s)). ";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
 
@@ -51,7 +51,7 @@ public class CasoInicialTest {
         Carta cinco = new Carta("cinco", 8, 1, Tablero.CENTRO);
         atacantes.add(dos);
         defensores.add(cinco);
-        String resultadoEsperado = "Carta dos (3/2/Centro) vs Carta cinco (8/1/Centro) -> " +
+        String resultadoEsperado = "Carta dos (3/2/Centro/Efecto: N/A) vs Carta cinco (8/1/Centro/Efecto: N/A) -> " +
                 "Carta cinco pierde 3 punto(s) de Vida. Carta cinco destruido/a. ";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
@@ -62,7 +62,7 @@ public class CasoInicialTest {
         Carta cinco = new Carta("cinco", 3, 1, Tablero.IZQUIERDA);
         atacantes.add(tres);
         defensores.add(cinco);
-        String resultadoEsperado = "Carta tres (6/3/Derecha) vs Nadie (Vacío) -> " +
+        String resultadoEsperado = "Carta tres (6/3/Derecha/Efecto: N/A) vs Nadie (Vacío) -> " +
                 "Daño directo de 6 punto(s).";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
@@ -75,9 +75,9 @@ public class CasoInicialTest {
         atacantes.add(dos);
         atacantes.add(seis);
         defensores.add(cinco);
-        String resultadoEsperado = "Carta dos (3/1/Centro) vs Carta cinco (0/3/Centro) -> " +
+        String resultadoEsperado = "Carta dos (3/1/Centro/Efecto: N/A) vs Carta cinco (0/3/Centro/Efecto: N/A) -> " +
                 "Carta cinco pierde 3 punto(s) de Vida. Carta cinco destruido/a. " +
-                "Carta seis (6/3/Derecha) vs Nadie (Vacío) -> Daño directo de 6 punto(s).";
+                "Carta seis (6/3/Derecha/Efecto: N/A) vs Nadie (Vacío) -> Daño directo de 6 punto(s).";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
 
@@ -95,11 +95,11 @@ public class CasoInicialTest {
         defensores.add(seis);
         defensores.add(cinco);
         defensores.add(cuatro);
-        String resultadoEsperado = "Carta uno (7/2/Izquierda) vs Carta cuatro (5/3/Izquierda) -> " +
+        String resultadoEsperado = "Carta uno (7/2/Izquierda/Efecto: N/A) vs Carta cuatro (5/3/Izquierda/Efecto: N/A) -> " +
                 "Carta cuatro pierde 7 punto(s) de Vida. Carta cuatro destruido/a. " +
-                "Carta dos (2/1/Centro) vs Carta cinco (0/1/Centro) -> " +
+                "Carta dos (2/1/Centro/Efecto: N/A) vs Carta cinco (0/1/Centro/Efecto: N/A) -> " +
                 "Carta cinco pierde 2 punto(s) de Vida. Carta cinco destruido/a. " +
-                "Carta tres (0/4/Derecha) vs Carta seis (4/7/Derecha) -> " +
+                "Carta tres (0/4/Derecha/Efecto: N/A) vs Carta seis (4/7/Derecha/Efecto: N/A) -> " +
                 "Carta seis pierde 0 punto(s) de Vida (7 punto(s) de Vida restante(s)). ";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
