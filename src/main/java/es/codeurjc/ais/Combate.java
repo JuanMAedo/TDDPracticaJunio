@@ -7,7 +7,10 @@ public class Combate {
     private Combate() {
     }
 
-    public static String combatir(List<Carta> atacantes, List<Carta> defensores) {
+    public static String combatir(List<Carta> atacantes, List<Carta> defensores) throws IllegalPositionException{
+        if (posicionTableroRepetidas(atacantes) || posicionTableroRepetidas(defensores)) {
+            throw new IllegalPositionException("No pueden existir múltiples cartas en la misma posición del tablero");
+        }
         StringBuilder resultado = new StringBuilder();
         for (Carta atacante : atacantes) {
             int posicionDef = encontrarPosicion(atacante.getTablero(), defensores);
@@ -41,6 +44,16 @@ public class Combate {
             }
         }
         return -1;
+    }
+    private static boolean posicionTableroRepetidas(List<Carta> lista){
+        for (int i = 0; i < lista.size(); i++) {
+            for (int j = i + 1; j < lista.size(); j++) {
+                if (lista.get(i).getTablero() == lista.get(j).getTablero()) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 
 }

@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 
 public class CasoInicialTest {
 
@@ -26,7 +27,7 @@ public class CasoInicialTest {
     }
 
     @Test
-    public void casoUnoTest() {
+    public void casoUnoTest() throws IllegalPositionException{
         Carta uno = new Carta("uno", 5, 1, Tablero.IZQUIERDA);
         atacantes.add(uno);
         String resultadoEsperado = "Carta uno (5/1/Izquierda) vs Nadie (Vacío) -> Daño directo de 5 punto(s).";
@@ -34,7 +35,7 @@ public class CasoInicialTest {
     }
 
     @Test
-    public void casoDosTest() {
+    public void casoDosTest() throws IllegalPositionException{
         Carta uno = new Carta("uno", 3, 2, Tablero.IZQUIERDA);
         Carta cuatro = new Carta("cuatro", 8, 4, Tablero.IZQUIERDA);
         atacantes.add(uno);
@@ -45,7 +46,7 @@ public class CasoInicialTest {
     }
 
     @Test
-    public void casoTresTest() {
+    public void casoTresTest() throws IllegalPositionException{
         Carta dos = new Carta("dos", 3, 2, Tablero.CENTRO);
         Carta cinco = new Carta("cinco", 8, 1, Tablero.CENTRO);
         atacantes.add(dos);
@@ -56,7 +57,7 @@ public class CasoInicialTest {
     }
 
     @Test
-    public void casoCuatroTest() {
+    public void casoCuatroTest() throws IllegalPositionException{
         Carta tres = new Carta("tres", 6, 3, Tablero.DERECHA);
         Carta cinco = new Carta("cinco", 3, 1, Tablero.IZQUIERDA);
         atacantes.add(tres);
@@ -67,7 +68,7 @@ public class CasoInicialTest {
     }
 
     @Test
-    public void casoCincoTest() {
+    public void casoCincoTest() throws IllegalPositionException{
         Carta dos = new Carta("dos", 3, 1, Tablero.CENTRO);
         Carta seis = new Carta("seis", 6, 3, Tablero.DERECHA);
         Carta cinco = new Carta("cinco", 0, 3, Tablero.CENTRO);
@@ -81,7 +82,7 @@ public class CasoInicialTest {
     }
 
     @Test
-    public void casoSeisTest() {
+    public void casoSeisTest() throws IllegalPositionException{
         Carta uno = new Carta("uno", 7, 2, Tablero.IZQUIERDA);
         Carta dos = new Carta("dos", 2, 1, Tablero.CENTRO);
         Carta tres = new Carta("tres", 0, 4, Tablero.DERECHA);
@@ -103,4 +104,20 @@ public class CasoInicialTest {
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
 
+
+
+    @Test
+    public void casoSieteTest() {
+        Carta uno = new Carta("uno", 3, 2, Tablero.IZQUIERDA);
+        Carta dos = new Carta("dos", 5, 3, Tablero.IZQUIERDA);
+        Carta tres = new Carta("tres", 5, 3, Tablero.IZQUIERDA);
+        atacantes.add(uno);
+        atacantes.add(dos);
+        defensores.add(tres);
+
+        Throwable excepcion = assertThrows(IllegalPositionException.class, () -> {
+            String resultado= Combate.combatir(atacantes, defensores);
+        });
+        assertEquals("No pueden existir múltiples cartas en la misma posición del tablero", excepcion.getMessage());
+    }
 }
