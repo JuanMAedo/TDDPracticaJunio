@@ -50,4 +50,7 @@ public class Carta {
                 "/" + tablero.toString() + "/Efecto: " + ((efecto == null) ? "N/A" : efecto.toString()) + ")";
     }
 
+    public boolean esAtaqueBifurcado() {
+        return this.efecto == Efecto.ATAQUEBIFURCADO;
+    }
 }

@@ -60,5 +60,15 @@ public class CasoIntermedioTest {
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
 
-
+    @Test
+    public void casoOnceTest() throws IllegalPositionException{
+        Carta uno = new Carta("uno", 3, 5, Tablero.IZQUIERDA, Efecto.ATAQUEBIFURCADO);
+        Carta cinco = new Carta("cinco", 4, 2, Tablero.CENTRO);
+        atacantes.add(uno);
+        defensores.add(cinco);
+        String resultadoEsperado = "Carta uno (3/5/Izquierda/Efecto: Ataque bifurcado) vs Carta cinco " +
+                "(4/2/Centro/Efecto: N/A) -> Carta cinco pierde 3 punto(s) de " +
+                "Vida. Carta cinco destruido/a. ";
+        assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
+    }
 }
