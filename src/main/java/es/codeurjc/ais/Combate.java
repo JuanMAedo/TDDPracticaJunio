@@ -14,24 +14,31 @@ public class Combate {
         StringBuilder resultado = new StringBuilder();
         for (Carta atacante : atacantes) {
             int posicionDef;
-            if(atacante.esAtaqueBifurcado()){
-                 posicionDef = encontrarPosicion(Tablero.CENTRO, defensores);
-            }else{
-                 posicionDef = encontrarPosicion(atacante.getTablero(), defensores);
+            if (atacante.esAtaqueBifurcado()) {
+                posicionDef = encontrarPosicion(Tablero.CENTRO, defensores);
+            } else {
+                posicionDef = encontrarPosicion(atacante.getTablero(), defensores);
             }
             if (posicionDef != -1) { // Hay una carta Defensora en la posición Atacante
                 Carta defensor = defensores.get(posicionDef);
                 resultado.append(combateCartaDefensora(atacante, defensor));
             } else { // No hay Carta Defensora. Daño sobre el jugador
-                resultado.append(atacante).append(" vs Nadie (Vacío) -> Daño directo de ")
-                        .append(atacante.getAtaque()).append(" punto(s).");
+                int posicionDef2 = encontrarPosicion(atacante.getTablero(), defensores);
+                String rival = "";
+                if (posicionDef2 != -1) {
+                    rival = defensores.get(posicionDef2).toString();
+
+                } else {
+                    rival = "Nadie (Vacío)";
+                }
+                resultado.append(combateSinCartaDefensora(atacante, rival));
             }
         }
         return resultado.toString();
     }
 
 
-    private static String combateCartaDefensora( Carta atacante, Carta defensor) {
+    private static String combateCartaDefensora(Carta atacante, Carta defensor) {
         StringBuilder resultado = new StringBuilder();
         resultado.append(atacante).append(" vs ").append(defensor).append(" ->");
         if (atacante.esToqueMortal()) {
@@ -52,6 +59,10 @@ public class Combate {
         return resultado.toString();
     }
 
+    private static String combateSinCartaDefensora(Carta atacante, String rival) {
+        return  atacante + " vs " + rival +
+                " -> Daño directo de " + atacante.getAtaque() + " punto(s).";
+    }
 
     private static int vidaRestante(int defensa, int ataque) {
 
