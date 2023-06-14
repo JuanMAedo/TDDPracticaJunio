@@ -80,4 +80,27 @@ public class CasoInicialTest {
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
 
+    @Test
+    public void casoSeisTest() {
+        Carta uno = new Carta("uno", 7, 2, Tablero.IZQUIERDA);
+        Carta dos = new Carta("dos", 2, 1, Tablero.CENTRO);
+        Carta tres = new Carta("tres", 0, 4, Tablero.DERECHA);
+        Carta cuatro = new Carta("cuatro", 5, 3, Tablero.IZQUIERDA);
+        Carta cinco = new Carta("cinco", 0, 1, Tablero.CENTRO);
+        Carta seis = new Carta("seis", 4, 7, Tablero.DERECHA);
+        atacantes.add(uno);
+        atacantes.add(dos);
+        atacantes.add(tres);
+        defensores.add(seis);
+        defensores.add(cinco);
+        defensores.add(cuatro);
+        String resultadoEsperado = "Carta uno (7/2/Izquierda) vs Carta cuatro (5/3/Izquierda) -> " +
+                "Carta cuatro pierde 7 punto(s) de Vida. Carta cuatro destruido/a. " +
+                "Carta dos (2/1/Centro) vs Carta cinco (0/1/Centro) -> " +
+                "Carta cinco pierde 2 punto(s) de Vida. Carta cinco destruido/a. " +
+                "Carta tres (0/4/Derecha) vs Carta seis (4/7/Derecha) -> " +
+                "Carta seis pierde 0 punto(s) de Vida (7 punto(s) de Vida restante(s)). ";
+        assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
+    }
+
 }
