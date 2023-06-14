@@ -107,4 +107,17 @@ public class CasoIntermedioTest {
                 "vs Nadie (Vacío) -> Daño directo de 2 punto(s).";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
+
+    @Test
+    public void casoQuinceTest() throws IllegalPositionException{
+        Carta dos = new Carta("dos", 2, 1, Tablero.CENTRO, Efecto.ATAQUEBIFURCADO);
+        Carta seis = new Carta("seis", 4, 3, Tablero.DERECHA);
+        atacantes.add(dos);
+        defensores.add(seis);
+        String resultadoEsperado = "Carta dos (2/1/Centro/Efecto: Ataque bifurcado) vs Carta seis " +
+                "(4/3/Derecha/Efecto: N/A) -> Carta seis pierde 2 punto(s) de "+
+                "Vida (1 punto(s) de Vida restante(s)). Carta dos (2/1/Centro/Efecto: Ataque bifurcado) "+
+                "vs Nadie (Vacío) -> Daño directo de 2 punto(s).";
+        assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
+    }
 }

@@ -62,7 +62,11 @@ public class Combate {
         if (!atacante.esAtaqueBifurcado()) {
             return encontrarPosicion(atacante.getTablero(), defensores);
         } else if (atacante.getTablero().equals(Tablero.CENTRO)) {
-            return encontrarPosicion(Tablero.IZQUIERDA, defensores);
+            if (encontrarPosicion(Tablero.IZQUIERDA, defensores) != -1) {
+                return encontrarPosicion(Tablero.IZQUIERDA, defensores);
+            }else{
+                return encontrarPosicion(Tablero.DERECHA, defensores);
+            }
         } else {
             return encontrarPosicion(Tablero.CENTRO, defensores);
         }
