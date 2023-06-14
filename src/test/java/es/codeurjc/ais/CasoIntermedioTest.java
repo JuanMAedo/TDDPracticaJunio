@@ -35,4 +35,15 @@ public class CasoIntermedioTest {
                 "(2/7/Izquierda/Efecto: N/A) -> Carta cuatro destruido/a. ";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
+    @Test
+    public void casoNueveTest() throws IllegalPositionException{
+        Carta dos = new Carta("dos", 4, 2, Tablero.CENTRO);
+        Carta cinco = new Carta("cinco", 0, 5, Tablero.CENTRO, Efecto.TOQUEMORTAL);
+        atacantes.add(dos);
+        defensores.add(cinco);
+        String resultadoEsperado = "Carta dos (4/2/Centro/Efecto: N/A) vs Carta cinco " +
+                "(0/5/Centro/Efecto: Toque mortal) -> Carta cinco pierde 4 punto(s) de " +
+                "Vida (1 punto(s) de Vida restante(s)). Carta dos destruido/a. ";
+        assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
+    }
 }

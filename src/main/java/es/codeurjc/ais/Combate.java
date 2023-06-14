@@ -29,6 +29,9 @@ public class Combate {
                     resultado.append(" (").append(vidaRestante(defensor.getDefensa(), atacante.getAtaque()))
                             .append(" punto(s) de Vida restante(s)). ");
                 }
+                if(defensor.esToqueMortal()){ // Después de calcular el combate el defensor destruye o no al Atacante
+                    resultado.append("Carta ").append(atacante.getNombre()).append(" destruido/a. ");
+                }
             } else { // No hay Carta Defensora. Daño sobre el jugador
                 resultado.append(atacante).append(" vs Nadie (Vacío) -> Daño directo de ")
                         .append(atacante.getAtaque()).append(" punto(s).");
