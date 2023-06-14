@@ -14,7 +14,8 @@ public class Combate {
         StringBuilder resultado = new StringBuilder();
         for (Carta atacante : atacantes) {
             int posicionDef;
-            if (atacante.esAtaqueBifurcado()) {
+            if (atacante.esAtaqueBifurcado() && (atacante.getTablero().equals(Tablero.IZQUIERDA)
+                    || atacante.getTablero().equals(Tablero.DERECHA))) {
                 posicionDef = encontrarPosicion(Tablero.CENTRO, defensores);
             } else {
                 posicionDef = encontrarPosicion(atacante.getTablero(), defensores);
