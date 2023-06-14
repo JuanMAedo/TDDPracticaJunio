@@ -55,16 +55,16 @@ public class CasoInicialTest {
                 "Carta cinco pierde 3 puntos de Vida. Carta cinco destruido/a.";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
-/*
-       public static String combatir(Carta Atacante, Carta Defensor) {
-        String resultado = Atacante.toString() + " vs " + Defensor.toString() + " -> " +
-                "Carta" + Defensor.nombreString() + " pierde " + Atacante.getAtaque() + " puntos de Vida";
-        if (Defensor.getVida() <= Atacante.getAtaque()) {
-            resultado += ". Carta" + Defensor.nombreString() + " destruido/a.";
-        } else {
-            resultado += " (" + (Defensor.getVida() - Atacante.getAtaque()) + " punto(s) de Vida restante(s)).";
-        }
-        return (resultado);
-    }*/
+
+    @Test
+    public void casoCuatroTest() {
+        Carta tres = new Carta("tres", 6, 3, Tablero.DERECHA);
+        Carta cinco = new Carta("cinco", 3, 1, Tablero.CENTRO);
+        atacantes.add(tres);
+        defensores.add(cinco);
+        String resultadoEsperado = "Carta tres (6/3/Derecha) vs Nadie (Vacío) -> " +
+                "Daño directo de 6 punto(s).";
+        assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
+    }
 
 }

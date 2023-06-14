@@ -1,7 +1,7 @@
 package es.codeurjc.ais;
 
 public enum Tablero {
-    IZQUIERDA("Izquierda"), CENTRO("Centro");
+    IZQUIERDA("Izquierda"), CENTRO("Centro"), DERECHA("Derecha");
 
 
     private final String nombre;

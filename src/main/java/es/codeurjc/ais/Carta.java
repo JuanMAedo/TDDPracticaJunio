@@ -26,6 +26,10 @@ public class Carta {
         return defensa;
     }
 
+    public Tablero getTablero() {
+        return tablero;
+    }
+
     @Override
     public String toString() {
         return "Carta " + this.getNombre() + " (" + this.getAtaque() + "/" + this.getDefensa() +
