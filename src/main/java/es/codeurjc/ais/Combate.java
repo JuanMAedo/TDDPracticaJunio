@@ -14,30 +14,59 @@ public class Combate {
         StringBuilder resultado = new StringBuilder();
         int posicionDef;
         for (Carta atacante : atacantes) {
-            posicionDef = posicionAtaque(atacante, defensores);
-            if (posicionDef > -1) { // Hay una carta Defensora en la posición Atacante
+            if (!atacante.esAtaqueBifurcado()) {
+                posicionDef = encontrarPosicion(atacante.getTablero(), defensores);
+            } else {
+                resultado.append(ataqueBifurcado(atacante, defensores));
+                break;
+            }
+            if (posicionDef != -1) { // Hay una carta Defensora en la posición Atacante
                 Carta defensor = defensores.get(posicionDef);
                 resultado.append(combateCartaDefensora(atacante, defensor));
             }
-            if( posicionDef == -3) {
-                Carta defensor = defensores.get(encontrarPosicion(Tablero.IZQUIERDA,defensores));
-                resultado.append(combateCartaDefensora(atacante, defensor));
-                defensor = defensores.get(encontrarPosicion(Tablero.DERECHA,defensores));
-                resultado.append(combateCartaDefensora(atacante, defensor));
-            }
-            if ((atacante.esAtaqueBifurcado() && (atacante.getTablero().equals(Tablero.CENTRO) && posicionDef != -3))
-                    || posicionDef == -1 || posicionDef == -2) { // No hay Carta Defensora. Daño sobre el jugador
-                int posicionDef2 = encontrarPosicion(atacante.getTablero(), defensores);
-                String rival;
-                rival = (posicionDef2 != -1) ? defensores.get(posicionDef2).toString() :
-                        "Nadie (Vacío)";
-                resultado.append(combateSinCartaDefensora(atacante, rival));
-                if (posicionDef == -2) {
-                    resultado.append(" ").append(combateSinCartaDefensora(atacante, rival));
-                }
+            if (posicionDef == -1) { // No hay Carta Defensora. Daño sobre el jugador
+                resultado.append(combateSinCartaDefensora(atacante, "Nadie (Vacío)"));
             }
         }
         return resultado.toString();
+    }
+
+    private static String ataqueBifurcado(Carta atacante, List<Carta> defensores) {
+        String resultado, rival;
+        int posicion;
+        if (!atacante.getTablero().equals(Tablero.CENTRO)) { // Atacamos sólo al Centro
+
+            posicion = encontrarPosicion(Tablero.CENTRO, defensores);
+            if (posicion != -1) { // Tenemos rival en el Centro
+                resultado = combateCartaDefensora(atacante, defensores.get(posicion));
+            } else { // No tenemos rival en el Centro pero miramos si tenemos enfrente o no
+                posicion = encontrarPosicion(atacante.getTablero(), defensores);
+                rival = (posicion != -1) ? defensores.get(posicion).toString() : "Nadie (Vacío)";
+                resultado = combateSinCartaDefensora(atacante, rival);
+            }
+        } else { // Atacamos a Izquierda y Derecha
+
+            Carta defensorIzq, defensorDer;
+            if ((encontrarPosicion(Tablero.IZQUIERDA, defensores) != -1) &&
+                    (encontrarPosicion(Tablero.DERECHA, defensores) != -1)) { // Defensor ambos lados
+                defensorIzq = defensores.get(encontrarPosicion(Tablero.IZQUIERDA, defensores));
+                defensorDer = defensores.get(encontrarPosicion(Tablero.DERECHA, defensores));
+                resultado = combateCartaDefensora(atacante, defensorIzq);
+                resultado += combateCartaDefensora(atacante, defensorDer);
+            } else if (encontrarPosicion(Tablero.IZQUIERDA, defensores) != -1) {// Defensor sólo Izquierda
+                defensorIzq = defensores.get(encontrarPosicion(Tablero.IZQUIERDA, defensores));
+                resultado = combateCartaDefensora(atacante, defensorIzq);
+                resultado += combateSinCartaDefensora(atacante, "Nadie (Vacío)");
+            } else if (encontrarPosicion(Tablero.DERECHA, defensores) != -1) {// Defensor sólo Derecha
+                defensorDer = defensores.get(encontrarPosicion(Tablero.DERECHA, defensores));
+                resultado = combateCartaDefensora(atacante, defensorDer);
+                resultado += combateSinCartaDefensora(atacante, "Nadie (Vacío)");
+            } else { // No hay defensor ni en Izq ni en Der
+                resultado = combateSinCartaDefensora(atacante, "Nadie (Vacío)") + " ";
+                resultado += combateSinCartaDefensora(atacante, "Nadie (Vacío)");
+            }
+        }
+        return resultado;
     }
 
 
@@ -60,29 +89,6 @@ public class Combate {
             resultado.append("Carta ").append(atacante.getNombre()).append(" destruido/a. ");
         }
         return resultado.toString();
-    }
-
-    private static int posicionAtaque(Carta atacante, List<Carta> defensores) {
-        int resultado;
-        if (!atacante.esAtaqueBifurcado()) {
-            return encontrarPosicion(atacante.getTablero(), defensores);
-        } else if (atacante.getTablero().equals(Tablero.CENTRO)) {
-            resultado = encontrarPosicion(Tablero.IZQUIERDA, defensores);
-            if (resultado != -1 && (encontrarPosicion(Tablero.DERECHA, defensores) != -1)) {
-                return -3;
-            }
-            if (resultado != -1) {
-                return resultado;
-            }
-            resultado = encontrarPosicion(Tablero.DERECHA, defensores);
-            if (resultado != -1) {
-                return resultado;
-            } else {
-                return -2;
-            }
-        } else {
-            return encontrarPosicion(Tablero.CENTRO, defensores);
-        }
     }
 
     private static String combateSinCartaDefensora(Carta atacante, String rival) {
