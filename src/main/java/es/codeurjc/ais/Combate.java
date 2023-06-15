@@ -80,7 +80,11 @@ public class Combate {
         resultado.append(" Carta ").append(defensor.getNombre()).append(" pierde ")
                 .append(atacante.getAtaque()).append(" punto(s) de Vida");
         if (defensor.getDefensa() <= atacante.getAtaque()) {
-            resultado.append(". Carta ").append(defensor.getNombre()).append(" destruido/a. ");
+            if (defensor.esAsustadizo()) {
+                resultado = new StringBuilder(combateSinCartaDefensora(atacante, defensor.toString()));
+            } else {
+                resultado.append(". Carta ").append(defensor.getNombre()).append(" destruido/a. ");
+            }
         } else {
             resultado.append(" (").append(vidaRestante(defensor.getDefensa(), atacante.getAtaque()))
                     .append(" punto(s) de Vida restante(s)). ");

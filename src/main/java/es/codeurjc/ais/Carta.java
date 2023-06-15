@@ -55,4 +55,8 @@ public class Carta {
     public void setTablero(Tablero tablero) {
         this.tablero = tablero;
     }
+
+    public boolean esAsustadizo() {
+        return this.efecto == Efecto.ASUSTADIZO;
+    }
 }

@@ -3,7 +3,9 @@ package es.codeurjc.ais;
 
 public enum Efecto {
 
-    TOQUEMORTAL("Toque mortal"), ATAQUEBIFURCADO("Ataque bifurcado");
+    TOQUEMORTAL("Toque mortal"),
+    ATAQUEBIFURCADO("Ataque bifurcado"),
+    ASUSTADIZO("Asustadizo");
 
     private final String nombre;
 
