@@ -158,4 +158,16 @@ public class CasoIntermedioTest {
                 "-> Daño directo de 13 punto(s).";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
+
+    @Test
+    public void casoDiecinueveTest() throws IllegalPositionException{
+        Carta dos = new Carta("dos", 1, 2, Tablero.CENTRO);
+        Carta cinco = new Carta("cinco", 0, 10, Tablero.CENTRO, Efecto.ASUSTADIZO);
+        atacantes.add(dos);
+        defensores.add(cinco);
+        String resultadoEsperado = "Carta dos (1/2/Centro/Efecto: N/A) vs " +
+                "Carta cinco (0/10/Centro/Efecto: Asustadizo) " +
+                "-> Carta cinco pierde 1 punto(s) de Vida (9 punto(s) de Vida restante(s)). ";
+        assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
+    }
 }
