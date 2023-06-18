@@ -4,23 +4,24 @@ public class Carta {
 
     private final String nombre;
     private final int ataque;
-    private final int defensa;
-    private  Tablero tablero;
-    private final Efecto efecto;
+    private final int vida;
+    private Tablero tablero;
+    private final Efecto[] efectos;
 
-    public Carta(String nombre, int ataque, int defensa, Tablero tablero) {
+    public Carta(String nombre, int ataque, int vida, Tablero tablero) {
         this.nombre = nombre;
         this.ataque = ataque;
-        this.defensa = defensa;
+        this.vida = vida;
         this.tablero = tablero;
-        this.efecto = null;
+        this.efectos = null;
     }
-    public Carta(String nombre, int ataque, int defensa, Tablero tablero, Efecto efecto) {
+
+    public Carta(String nombre, int ataque, int vida, Tablero tablero, Efecto[] efectos) {
         this.nombre = nombre;
         this.ataque = ataque;
-        this.defensa = defensa;
+        this.vida = vida;
         this.tablero = tablero;
-        this.efecto = efecto;
+        this.efectos = efectos;
     }
 
     public String getNombre() {
@@ -31,29 +32,59 @@ public class Carta {
         return ataque;
     }
 
-    public int getDefensa() {
-        return defensa;
+    public int getVida() {
+        return vida;
     }
 
     public Tablero getTablero() {
         return tablero;
     }
 
-    public boolean esToqueMortal() {
-        return this.efecto == Efecto.TOQUEMORTAL;
-    }
     @Override
     public String toString() {
-        return "Carta " + this.getNombre() + " (" + this.getAtaque() + "/" + this.getDefensa() +
-                "/" + tablero.toString() + "/Efecto: " + ((efecto == null) ? "N/A" : efecto.toString()) + ")";
+        return "Carta " + this.getNombre() + " (" + this.getAtaque() + "/" + this.getVida() +
+                "/" + tablero.toString() + "/Efectos: " + ((efectos == null) ? "N/A" : stringEfectos()) + ")";
     }
 
+    private String stringEfectos() {
+        String cadenaEfectos = "";
+        for (int i = 1; i < efectos.length; i++) {
+            cadenaEfectos += efectos[i - 1].toString() + ", ";
+        }
+        cadenaEfectos += efectos[efectos.length - 1].toString();
+        return cadenaEfectos;
+
+    }
+
+    public boolean esToqueMortal() {
+        if (this.efectos != null) {
+            for (int j = 0; j < this.efectos.length; j++) {
+                if (this.efectos[j] == Efecto.TOQUEMORTAL) {
+                    return true;
+                }
+            }
+        }
+        return false;
+    }
     public boolean esAtaqueBifurcado() {
-        return this.efecto == Efecto.ATAQUEBIFURCADO;
+        if (this.efectos != null) {
+            for (int j = 0; j < this.efectos.length; j++) {
+                if (this.efectos[j] == Efecto.ATAQUEBIFURCADO) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
-
 
     public boolean esAsustadizo() {
-        return this.efecto == Efecto.ASUSTADIZO;
+        if (this.efectos != null) {
+            for (int j = 0; j < this.efectos.length; j++) {
+                if (this.efectos[j] == Efecto.ASUSTADIZO) {
+                    return true;
+                }
+            }
+        }
+        return false;
     }
 }

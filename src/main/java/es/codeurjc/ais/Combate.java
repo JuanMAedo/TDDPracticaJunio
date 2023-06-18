@@ -79,14 +79,14 @@ public class Combate {
         }
         resultado.append(" Carta ").append(defensor.getNombre()).append(" pierde ")
                 .append(atacante.getAtaque()).append(" punto(s) de Vida");
-        if (defensor.getDefensa() <= atacante.getAtaque()) {
+        if (defensor.getVida() <= atacante.getAtaque()) {
             if (defensor.esAsustadizo()) {
                 resultado = new StringBuilder(combateSinCartaDefensora(atacante, defensor.toString()));
             } else {
                 resultado.append(". Carta ").append(defensor.getNombre()).append(" destruido/a. ");
             }
         } else {
-            resultado.append(" (").append(vidaRestante(defensor.getDefensa(), atacante.getAtaque()))
+            resultado.append(" (").append(vidaRestante(atacante, defensor))
                     .append(" punto(s) de Vida restante(s)). ");
         }
         if (defensor.esToqueMortal()) {
@@ -99,8 +99,8 @@ public class Combate {
         return atacante + " vs " + rival + " -> Daño directo de " + atacante.getAtaque() + " punto(s).";
     }
 
-    private static int vidaRestante(int defensa, int ataque) {
-        return defensa - ataque;
+    private static int vidaRestante(Carta atacante, Carta defensor) {
+        return defensor.getVida() - atacante.getAtaque();
     }
 
     private static int encontrarPosicion(Tablero posicion, List<Carta> lista) {
