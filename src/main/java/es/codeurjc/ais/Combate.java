@@ -75,17 +75,17 @@ public class Combate {
         resultado.append(atacante).append(" vs ").append(defensor).append(" ->");
         if (atacante.esToqueMortal()) {
             resultado.append(" Carta ").append(defensor.getNombre()).append(" destruido/a. ");
-            return resultado.toString();
+        } else {
+            resultado.append(" Carta ").append(defensor.getNombre()).append(" pierde ")
+                    .append(atacante.getAtaque()).append(" punto(s) de Vida");
         }
-        resultado.append(" Carta ").append(defensor.getNombre()).append(" pierde ")
-                .append(atacante.getAtaque()).append(" punto(s) de Vida");
-        if (defensor.getVida() <= atacante.getAtaque()) {
+        if (defensor.getVida() <= atacante.getAtaque() && !atacante.esToqueMortal()) {
             if (defensor.esAsustadizo()) {
                 resultado = new StringBuilder(combateSinCartaDefensora(atacante, defensor.toString()));
             } else {
                 resultado.append(". Carta ").append(defensor.getNombre()).append(" destruido/a. ");
             }
-        } else {
+        } else if(!atacante.esToqueMortal()){
             resultado.append(" (").append(vidaRestante(atacante, defensor))
                     .append(" punto(s) de Vida restante(s)). ");
         }
