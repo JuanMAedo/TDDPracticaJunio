@@ -18,7 +18,7 @@ public class Combate {
                 posicionDef = encontrarPosicion(atacante.getTablero(), defensores);
             } else {
                 resultado.append(ataqueBifurcado(atacante, defensores));
-                break;
+                continue;
             }
             if (posicionDef != -1) { // Hay una carta Defensora en la posición Atacante
                 Carta defensor = defensores.get(posicionDef);
