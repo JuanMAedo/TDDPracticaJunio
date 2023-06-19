@@ -66,5 +66,17 @@ public class casoFinalTest {
                 "Carta cinco destruido/a. Carta dos destruido/a. ";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
+    @Test
+    public void casoVeintitresTest() throws IllegalPositionException {
+        Carta dos = new Carta("dos", 2, 1, Tablero.CENTRO,new Efecto[]{Efecto.TOQUEMORTAL, Efecto.ATAQUEBIFURCADO});
+        Carta cuatro = new Carta("cuatro", 4,5, Tablero.IZQUIERDA,new Efecto[]{Efecto.TOQUEMORTAL});
+        Carta cinco = new Carta("cinco", 3,8, Tablero.DERECHA,new Efecto[]{Efecto.TOQUEMORTAL});
+        atacantes.add(dos);
+        defensores.add(cuatro);
+        defensores.add(cinco);
+        String resultadoEsperado = "Carta dos (2/1/Centro/Efectos: Toque mortal, Ataque bifurcado) vs " +
+                "Carta cuatro (4/5/Izquierda/Efectos: Toque mortal) -> Carta cuatro destruido/a. Carta dos destruido/a. ";
+        assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
+    }
 
 }

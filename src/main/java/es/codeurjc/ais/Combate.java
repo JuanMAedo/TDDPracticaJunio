@@ -52,7 +52,9 @@ public class Combate {
                 defensorIzq = defensores.get(encontrarPosicion(Tablero.IZQUIERDA, defensores));
                 defensorDer = defensores.get(encontrarPosicion(Tablero.DERECHA, defensores));
                 resultado = combateCartaDefensora(atacante, defensorIzq);
-                resultado += combateCartaDefensora(atacante, defensorDer);
+                if (!defensorIzq.esToqueMortal()){
+                    resultado += combateCartaDefensora(atacante, defensorDer);
+                }
             } else if (encontrarPosicion(Tablero.IZQUIERDA, defensores) != -1) {// Defensor sólo Izquierda
                 defensorIzq = defensores.get(encontrarPosicion(Tablero.IZQUIERDA, defensores));
                 resultado = combateCartaDefensora(atacante, defensorIzq);
