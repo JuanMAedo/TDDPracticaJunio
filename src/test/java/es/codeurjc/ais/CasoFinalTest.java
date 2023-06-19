@@ -9,7 +9,7 @@ import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class casoFinalTest {
+public class CasoFinalTest {
     private static List<Carta> atacantes, defensores;
 
     @BeforeAll
@@ -78,6 +78,7 @@ public class casoFinalTest {
                 "Carta cuatro (4/5/Izquierda/Efectos: Toque mortal) -> Carta cuatro destruido/a. Carta dos destruido/a. ";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
+
     @Test
     public void casoVeinticuatroTest() throws IllegalPositionException {
         Carta dos = new Carta("dos", 4, 2, Tablero.IZQUIERDA,new Efecto[]{ Efecto.ATAQUEBIFURCADO});
@@ -99,4 +100,22 @@ public class casoFinalTest {
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
 
+    @Test
+    public void casoVeinticincoTest() throws IllegalPositionException {
+        Carta dos = new Carta("dos", 9, 2, Tablero.IZQUIERDA,new Efecto[]{ Efecto.TOQUEMORTAL});
+        Carta tres = new Carta("tres", 12, 3, Tablero.DERECHA);
+        Carta cuatro = new Carta("cuatro", 4,5, Tablero.IZQUIERDA,new Efecto[]{Efecto.ASUSTADIZO});
+        Carta cinco = new Carta("cinco", 3,8, Tablero.DERECHA,new Efecto[]{Efecto.TOQUEMORTAL, Efecto.ASUSTADIZO});
+        Carta seis = new Carta("seis", 12,2, Tablero.CENTRO,new Efecto[]{Efecto.ASUSTADIZO});
+        atacantes.add(dos);
+        atacantes.add(tres);
+        defensores.add(cuatro);
+        defensores.add(cinco);
+        defensores.add(seis);
+        String resultadoEsperado = "Carta dos (9/2/Izquierda/Efectos: Toque mortal) vs " +
+                "Carta cuatro (4/5/Izquierda/Efectos: Asustadizo) -> Carta cuatro destruido/a. " +
+                "Carta tres (12/3/Derecha/Efectos: N/A) vs Carta cinco (3/8/Derecha/Efectos: Toque mortal, Asustadizo) -> " +
+                "Daño directo de 12 punto(s).Carta tres destruido/a. ";
+        assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
+    }
 }

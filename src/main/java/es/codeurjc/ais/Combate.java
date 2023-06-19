@@ -47,22 +47,23 @@ public class Combate {
         } else { // Atacamos a Izquierda y Derecha
 
             Carta defensorIzq, defensorDer;
-            if ((encontrarPosicion(Tablero.IZQUIERDA, defensores) != -1) &&
-                    (encontrarPosicion(Tablero.DERECHA, defensores) != -1)) { // Defensor ambos lados
+            if (encontrarPosicion(Tablero.IZQUIERDA, defensores) != -1) { // Defensor en Izquierda
                 defensorIzq = defensores.get(encontrarPosicion(Tablero.IZQUIERDA, defensores));
-                defensorDer = defensores.get(encontrarPosicion(Tablero.DERECHA, defensores));
                 resultado = combateCartaDefensora(atacante, defensorIzq);
-                if (!defensorIzq.esToqueMortal()){
+                if (!defensorIzq.esToqueMortal() && encontrarPosicion(Tablero.DERECHA, defensores) != -1) {
+                    //Defensor en la derecha y no ha muerto el atacante
+                    defensorDer = defensores.get(encontrarPosicion(Tablero.DERECHA, defensores));
                     resultado += combateCartaDefensora(atacante, defensorDer);
+                } else if (!defensorIzq.esToqueMortal()) {// Defensor sólo Izquierda y no ha muerto el atacante
+                    resultado += combateSinCartaDefensora(atacante, "Nadie (Vacío)");
                 }
-            } else if (encontrarPosicion(Tablero.IZQUIERDA, defensores) != -1) {// Defensor sólo Izquierda
-                defensorIzq = defensores.get(encontrarPosicion(Tablero.IZQUIERDA, defensores));
-                resultado = combateCartaDefensora(atacante, defensorIzq);
-                resultado += combateSinCartaDefensora(atacante, "Nadie (Vacío)");
             } else if (encontrarPosicion(Tablero.DERECHA, defensores) != -1) {// Defensor sólo Derecha
                 defensorDer = defensores.get(encontrarPosicion(Tablero.DERECHA, defensores));
                 resultado = combateCartaDefensora(atacante, defensorDer);
-                resultado += combateSinCartaDefensora(atacante, "Nadie (Vacío)");
+                if (!defensorDer.esToqueMortal()) {
+                    // No ha muerto el atacante
+                    resultado += combateSinCartaDefensora(atacante, "Nadie (Vacío)");
+                }
             } else { // No hay defensor ni en Izq ni en Der
                 resultado = combateSinCartaDefensora(atacante, "Nadie (Vacío)") + " ";
                 resultado += combateSinCartaDefensora(atacante, "Nadie (Vacío)");
@@ -87,7 +88,7 @@ public class Combate {
             } else {
                 resultado.append(". Carta ").append(defensor.getNombre()).append(" destruido/a. ");
             }
-        } else if(!atacante.esToqueMortal()){
+        } else if (!atacante.esToqueMortal()) {
             resultado.append(" (").append(vidaRestante(atacante, defensor))
                     .append(" punto(s) de Vida restante(s)). ");
         }
