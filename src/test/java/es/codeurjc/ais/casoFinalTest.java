@@ -36,4 +36,19 @@ public class casoFinalTest {
                 "Daño directo de 2 punto(s).";
         assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
     }
+
+    @Test
+    public void casoVeintiunoTest() throws IllegalPositionException {
+        Carta dos = new Carta("dos", 2, 1, Tablero.CENTRO,new Efecto[]{Efecto.TOQUEMORTAL, Efecto.ATAQUEBIFURCADO});
+        Carta cuatro = new Carta("cuatro", 4,5, Tablero.IZQUIERDA);
+        Carta cinco = new Carta("cinco", 7,2, Tablero.DERECHA);
+        atacantes.add(dos);
+        defensores.add(cuatro);
+        defensores.add(cinco);
+        String resultadoEsperado = "Carta dos (2/1/Centro/Efectos: Toque mortal, Ataque bifurcado) vs " +
+                "Carta cuatro (4/5/Izquierda/Efectos: N/A) -> Carta cuatro destruido/a. "+
+                "Carta dos (2/1/Centro/Efectos: Toque mortal, Ataque bifurcado) vs Carta cinco (7/2/Derecha/Efectos: N/A) -> " +
+                "Carta cinco destruido/a. ";
+        assertEquals(resultadoEsperado, Combate.combatir(atacantes, defensores));
+    }
 }
